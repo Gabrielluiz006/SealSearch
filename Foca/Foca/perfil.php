@@ -222,6 +222,47 @@
 	<script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
 	
 
+    <?php
+    
+    header('Content-type: text/html; charset=ISO-8859-1');
+    $codigo = file_get_contents("https://www.kabum.com.br/hardware/placa-de-video-vga"); // PEGA O SITE QUE EU QUERO ROUBAR
+   
+    
+    $array1 = explode('<div class="listagem-box"', $codigo); // MARCA UM LOCAL ONDE QUERO PEGAR NO TEXTO
+
+    $regex = "/<li\s[a-z]*(.*)\s+<[a-z]*\s[a-z]*(.){2}[A-Z].[a-z]+\s[a-z0-5]{2}.{2}\s+.{2}[a-z]{3}.\s+.[0-9]*\s.{11}.+/"; // REGEX PARA
+    $regex2 = '/<div(\s)[a-z]{5}="[a-z]{5}:[a-z]+(.){3}(\s)+(.)+(\s)+<!(.)*(\s)+<[a-z]{3}(\s)[a-z]{5}=(.)*(\s)+<\/[a-z]+>(\s)+(.)+(\s)*<\/div>(\s)+(.)+/';
+    $regex3 = "/<div(\s){1}[a-z]{5}(.){2}[A-Z]-[a-z0-9]*(.){1}(\s)[a-z]*(.){2}(.)+/";
+    $regex4 = '/<div(\s){1}[a-z]{5}(.){2}[a-z]+-[a-z]*"><[a-z]{1}>(.)+/';
+    $regex5 = '/[a-z]{1};">(.*)</';
+    $regex6 = '/<img(\s)[a-z]{3}="[a-z]{5}:(.){2}[a-z]{6}.[a-z]{5}.(.){6}\/(.){26}\/[a-z]{6}\/[a-z]{7}.[a-z]{3}"(\s)width="[0-9]{3}" (.){6}="28"\s\/>/';
+    $regex7 = '/b[a-z]{5}="0"(\s)h[a-z]{5}="90"(\s)[a-z]{5}="90"(.){2}\/a>/';
+
+    $regex8 = '/<span(\s)[a-z]{5}(.){4}s[a-z]{8}"/'; // Regex para capturar o começo de um span
+                                                     // $regex9 = '//';
+    $regex9 = '/[.][.]<(.){5}><[a-z]{2}(.)+/'; // Regex para capturar o fim de um span
+
+    foreach ($array1 as $idArray => $array) {
+
+        if ($idArray > 0) {
+            $img = explode('style="width: 770px;">', $array);
+            $img = explode(' /></a>', $img[1]);
+            $propaganda = '<div class="listagem-box"' . $img[0] . " /></a>";
+            $resultRegex1 = preg_replace($regex, "", $propaganda);
+            $resultRegex2 = preg_replace($regex2, "", $resultRegex1);
+            $resultRegex3 = preg_replace($regex3, "", $resultRegex2);
+            $resultRegex4 = preg_replace($regex4, "", $resultRegex3);
+            $resultRegex5 = preg_replace($regex5, "", $resultRegex4);
+            $resultRegex6 = preg_replace($regex6, "", $resultRegex5);
+            $resultRegex7 = preg_replace($regex7, 'border="0" height="80" width="80"></a>', $resultRegex6);
+
+            $resultRegex8 = preg_replace($regex8, '<div class ="H-subtitulo-Troca"><span class="H-subtitulo"', $resultRegex7);
+            $resultRexgex9 = preg_replace($regex9, "..</span><br /></div>", $resultRegex8);
+
+            echo $resultRexgex9 . '<hr align="left">';
+        }
+    }
+    ?>
 
 
 
