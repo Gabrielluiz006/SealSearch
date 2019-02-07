@@ -1,10 +1,7 @@
 <!doctype html>
 
-<html> 
-      
-        
+<html>   
 <head>
-
        
                 <!-- Required meta tags -->
                 <meta charset="utf-8">
@@ -18,23 +15,11 @@
             
                 <title>Cadastroreal</title>
 
-
-     
-
-
-            
-            
-              
             </head>
 
             <link rel="stylesheet" href="node_modules/bootstrap/compiler/style.css">
 
             <body>
-
-
-            
-
-
 
 <!-- nav bar-->
 
@@ -181,8 +166,6 @@
          <!-- Sign up button -->
             <button class="btn btn-info my-4 btn-block" type="submit">Registre-se</button>
         
-        
-        
             <hr>
         
           
@@ -191,35 +174,6 @@
         
               <!-- fim do formulário-->
         
-    
-  
-  
-  
-  
-  
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
-     
-
-
- 
-
-
-
-
-
 
 <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -289,9 +243,6 @@
         <!--/.footer-bottom--> 
     </footer>
     <!-- final do footer-->
-
-
-
 
 </body>
 
