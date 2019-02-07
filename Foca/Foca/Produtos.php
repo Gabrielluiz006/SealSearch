@@ -5,7 +5,7 @@
                 <meta charset="utf-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
             
-            
+
                  <!-- link para a página onde fica o css-->
                  <link rel="stylesheet" type="text/css" href="estiloapolo.css">
             
@@ -56,7 +56,7 @@
 
     <?php
     
-    header('Content-type: text/html; charset=ISO-8859-1');
+    
     $codigo = file_get_contents("https://www.kabum.com.br/hardware/placa-de-video-vga"); // PEGA O SITE QUE EU QUERO ROUBAR
     $array1 = explode('<div class="listagem-box"', $codigo); // MARCA UM LOCAL ONDE QUERO PEGAR NO TEXTO
 
