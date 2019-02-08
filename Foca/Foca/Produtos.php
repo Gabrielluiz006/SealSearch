@@ -5,23 +5,20 @@
                 <meta charset="utf-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
             
-            
                  <!-- link para a página onde fica o css-->
                  <link rel="stylesheet" type="text/css" href="estiloapolo.css">
             
                 <!-- Bootstrap CSS -->
                 <link rel="stylesheet" href="node_modules/bootstrap/compiler/bootstrap.css">
-            
+        
                 <title>Produtos</title>
 
             </head>
 
             <link rel="stylesheet" href="node_modules/bootstrap/compiler/style.css">
-
-            <body background="http://poaodontologia.com/wp-content/uploads/2016/01/Background-cinza-sobre-nost-1-300x261.jpg">
+    <body>
 
 <!-- nav bar-->
-
 	<div class="menu">
 		<div class="barra-pesquisa">
 			<form action="/action_page.php">
@@ -39,10 +36,10 @@
 			</div>
 		</div>
 	</div>
-
       <!-- fim do nav-->
 
       <!-- GRID1-->
+      <div></div>
           
       <div class="container">
         <br>  <p class="text-center"> <a href="http://bootstrap-ecommerce.com/"> </a></p>
@@ -53,12 +50,46 @@
     <script src="node_modules/popper.js/dist/umd/popper.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
 
+    <!--css do das propagandas-->
+    <style>
+        div.H-subtitulo-Troca {
+	    width: 550px;
+	    word-wrap: break-word;
+        }
+        hr{
+	    width: 700px;
+	    border-width: 1px;
+	    border-color: grey;
+            }
+        .logo{
+            
+        float: right;
+        width: 1000px;
+        height: 60px;
+        cursor: pointer;
+        cursor: hand;
+        background-image:url(images/anc.fw.png);
+        background-repeat: no-repeat;
+}
+</style>
+    <!--fim do css das propagandas-->
 
+    <div class= "logo">
     <?php
+    $x  = '<img src="https://static.kabum.com.br/conteudo/temas/001/imagens/topo/logo_kabum_.png" width="115" height="35">';
+    //echo $x;
+    ?>
+	</div>
     
+    <?php
     header('Content-type: text/html; charset=ISO-8859-1');
+    $codigo = file_get_contents("https://www.kabum.com.br/hardware/placa-de-video-vga"); // PEGA O SITE QUE EU QUERO ROUBAR
+    $explode1 = explode('<div id="header_logo"', $codigo);
+    $explode2 = explode('width="288" height="104"', $explode1[1]);
+    $logo='<div id="logo_position'.$explode2[0].'width="115" height="35"';
 
     $codigo = file_get_contents("https://www.kabum.com.br/hardware/placa-de-video-vga"); // PEGA O SITE QUE EU QUERO ROUBAR
+
     $array1 = explode('<div class="listagem-box"', $codigo); // MARCA UM LOCAL ONDE QUERO PEGAR NO TEXTO
 
     //CADA VARIAVEL REGEX TEM UMA FUNCAO DE PEGAR PARTE DO CONTEUDO
@@ -71,14 +102,15 @@
     $regex7 = '/b[a-z]{5}="0"(\s)h[a-z]{5}="90"(\s)[a-z]{5}="90"(.){2}\/a>/';
     $regex8 = '/<span(\s)[a-z]{5}(.){4}s[a-z]{8}"/';
     $regex9 = '/[.][.]<(.){5}><[a-z]{2}(.)+/';
+    $regex10 ='/<img(.*)[a-z]{6}="24"(\s)\/>/';
+    $regex11 = '/<(.*)tag_open[a-z]{3}.[a-z]{3}"\/>/';
 
     //FOREACH PARA SEPARAR PROPAGANDA UMA A UMA. O IF SERVE PARA PULAR UM ERRO QUE ACONTECE NO $IDARRAY[0]
     foreach ($array1 as $idArray => $array) {
         if ($idArray > 0) {
-            //
             $img = explode('style="width: 770px;">', $array);
             $img = explode(' /></a>', $img[1]);
-            $propaganda = '<div class="listagem-box"' . $img[0] . " /></a>";
+            $propaganda = '<div class="listagem-box">' . $img[0] . " /></a>";
 
             //FUNCOES PARA EXCLUIR OU PARA SUBSTITUIR UM CONTEUDO
             $resultRegex1 = preg_replace($regex, "", $propaganda);
@@ -89,13 +121,13 @@
             $resultRegex6 = preg_replace($regex6, "", $resultRegex5);
             $resultRegex7 = preg_replace($regex7, 'border="0" height="80" width="80"></a>', $resultRegex6);
             $resultRegex8 = preg_replace($regex8, '<div class ="H-subtitulo-Troca"><span class="H-subtitulo"', $resultRegex7);
-            $resultRexgex9 = preg_replace($regex9, "..</span><br /></div>", $resultRegex8);
-            
-            echo $resultRexgex9 . '<hr align="left">';
+            $resultRegex9 = preg_replace($regex9, "..</span><br /></div>", $resultRegex8);
+            $resultRegex10 = preg_replace($regex10,"", $resultRegex9);
+            $resultRegex11 = preg_replace($regex11,"", $resultRegex10);
+           echo $resultRegex11 .$x.'<hr align="left">';
         }
     }
     ?>
-
 
    <!-- início do footer-->
    <footer>
