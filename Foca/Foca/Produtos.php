@@ -1,197 +1,285 @@
-<!doctype html>
-<html> 
+<!DOCTYPE html>
+<html lang="en">
 <head>
-                <!-- Required meta tags -->
-                <meta charset="utf-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-            
-                 <!-- link para a página onde fica o css-->
-                 <link rel="stylesheet" type="text/css" href="estiloapolo.css">
-            
-                <!-- Bootstrap CSS -->
-                <link rel="stylesheet" href="node_modules/bootstrap/compiler/bootstrap.css">
-        
-                <title>Produtos</title>
-
-            </head>
-
-            <link rel="stylesheet" href="node_modules/bootstrap/compiler/style.css">
-    <body>
-
-<!-- nav bar-->
-	<div class="menu">
-		<div class="barra-pesquisa">
-			<form action="/action_page.php">
-				<input type="text" placeholder="Pesquisar..." name="pesquisar">
-				<button type="submit"><i class="fa fa-search"></i></button>
-			</form>
-		</div>
-		<div class="item-menu">
-        <a class="active" href="home.html">Home</a>
-			<a class="active" href="perfil.html">Perfil</a>
-			<a class="active" href="Cadastro.html">Cadastro</a>
-			<a class="active"  href="Produtos.html">Produtos</a>
-			<div class="login">
-				<a href="#">Login</a>
-			</div>
-		</div>
-	</div>
-      <!-- fim do nav-->
-
-      <!-- GRID1-->
-      <div></div>
-          
-      <div class="container">
-        <br>  <p class="text-center"> <a href="http://bootstrap-ecommerce.com/"> </a></p>
-        
-      <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="node_modules/jquery/dist/jquery.js"></script>
-    <script src="node_modules/popper.js/dist/umd/popper.js"></script>
-    <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
-
-    <!--css do das propagandas-->
-    <style>
-        div.H-subtitulo-Troca {
-	    width: 550px;
-	    word-wrap: break-word;
-        }
-        hr{
-	    width: 700px;
-	    border-width: 1px;
-	    border-color: grey;
-            }
-        .logo{
-            
-        float: right;
-        width: 1000px;
-        height: 60px;
-        cursor: pointer;
-        cursor: hand;
-        background-image:url(images/anc.fw.png);
-        background-repeat: no-repeat;
-}
-</style>
-    <!--fim do css das propagandas-->
-
-    <div class= "logo">
-    <?php
-    $x  = '<img src="https://static.kabum.com.br/conteudo/temas/001/imagens/topo/logo_kabum_.png" width="115" height="35">';
-    //echo $x;
-    ?>
-	</div>
-    
-    <?php
-    header('Content-type: text/html; charset=ISO-8859-1');
-    $codigo = file_get_contents("https://www.kabum.com.br/hardware/placa-de-video-vga"); // PEGA O SITE QUE EU QUERO ROUBAR
-    $explode1 = explode('<div id="header_logo"', $codigo);
-    $explode2 = explode('width="288" height="104"', $explode1[1]);
-    $logo='<div id="logo_position'.$explode2[0].'width="115" height="35"';
-
-    $codigo = file_get_contents("https://www.kabum.com.br/hardware/placa-de-video-vga"); // PEGA O SITE QUE EU QUERO ROUBAR
-
-    $array1 = explode('<div class="listagem-box"', $codigo); // MARCA UM LOCAL ONDE QUERO PEGAR NO TEXTO
-
-    //CADA VARIAVEL REGEX TEM UMA FUNCAO DE PEGAR PARTE DO CONTEUDO
-    $regex = "/<li\s[a-z]*(.*)\s+<[a-z]*\s[a-z]*(.){2}[A-Z].[a-z]+\s[a-z0-5]{2}.{2}\s+.{2}[a-z]{3}.\s+.[0-9]*\s.{11}.+/";
-    $regex2 = '/<div(\s)[a-z]{5}="[a-z]{5}:[a-z]+(.){3}(\s)+(.)+(\s)+<!(.)*(\s)+<[a-z]{3}(\s)[a-z]{5}=(.)*(\s)+<\/[a-z]+>(\s)+(.)+(\s)*<\/div>(\s)+(.)+/';
-    $regex3 = "/<div(\s){1}[a-z]{5}(.){2}[A-Z]-[a-z0-9]*(.){1}(\s)[a-z]*(.){2}(.)+/";
-    $regex4 = '/<div(\s){1}[a-z]{5}(.){2}[a-z]+-[a-z]*"><[a-z]{1}>(.)+/';
-    $regex5 = '/[a-z]{1};">(.*)</';
-    $regex6 = '/<img(\s)[a-z]{3}="[a-z]{5}:(.){2}[a-z]{6}.[a-z]{5}.(.){6}\/(.){26}\/[a-z]{6}\/[a-z]{7}.[a-z]{3}"(\s)width="[0-9]{3}" (.){6}="28"\s\/>/';
-    $regex7 = '/b[a-z]{5}="0"(\s)h[a-z]{5}="90"(\s)[a-z]{5}="90"(.){2}\/a>/';
-    $regex8 = '/<span(\s)[a-z]{5}(.){4}s[a-z]{8}"/';
-    $regex9 = '/[.][.]<(.){5}><[a-z]{2}(.)+/';
-    $regex10 ='/<img(.*)[a-z]{6}="24"(\s)\/>/';
-    $regex11 = '/<(.*)tag_open[a-z]{3}.[a-z]{3}"\/>/';
-
-    //FOREACH PARA SEPARAR PROPAGANDA UMA A UMA. O IF SERVE PARA PULAR UM ERRO QUE ACONTECE NO $IDARRAY[0]
-    foreach ($array1 as $idArray => $array) {
-        if ($idArray > 0) {
-            $img = explode('style="width: 770px;">', $array);
-            $img = explode(' /></a>', $img[1]);
-            $propaganda = '<div class="listagem-box">' . $img[0] . " /></a>";
-
-            //FUNCOES PARA EXCLUIR OU PARA SUBSTITUIR UM CONTEUDO
-            $resultRegex1 = preg_replace($regex, "", $propaganda);
-            $resultRegex2 = preg_replace($regex2, "", $resultRegex1);
-            $resultRegex3 = preg_replace($regex3, "", $resultRegex2);
-            $resultRegex4 = preg_replace($regex4, "", $resultRegex3);
-            $resultRegex5 = preg_replace($regex5, "", $resultRegex4);
-            $resultRegex6 = preg_replace($regex6, "", $resultRegex5);
-            $resultRegex7 = preg_replace($regex7, 'border="0" height="80" width="80"></a>', $resultRegex6);
-            $resultRegex8 = preg_replace($regex8, '<div class ="H-subtitulo-Troca"><span class="H-subtitulo"', $resultRegex7);
-            $resultRegex9 = preg_replace($regex9, "..</span><br /></div>", $resultRegex8);
-            $resultRegex10 = preg_replace($regex10,"", $resultRegex9);
-            $resultRegex11 = preg_replace($regex11,"", $resultRegex10);
-           echo $resultRegex11 .$x.'<hr align="left">';
-        }
+  <title>Seal search</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <style>
+    /* Remove the navbar's default rounded borders and increase the bottom margin */ 
+    .navbar {
+      margin-bottom: 50px;
+      border-radius: 0;
     }
-    ?>
-
-   <!-- início do footer-->
-   <footer>
-    <div class="footer" id="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-2  col-md-2 col-sm-4 col-xs-6">
-                 
-                </div>
-                <div class="col-lg-2  col-md-2 col-sm-4 col-xs-6">
-
-                
-                </div>
-                <div class="col-lg-2  col-md-2 col-sm-4 col-xs-6">
-                  
-                </div>
-                <div class="col-lg-2  col-md-2 col-sm-4 col-xs-6">
-                 
-                </div>
-                <div class="col-lg-3  col-md-3 col-sm-6 col-xs-12 ">
-                
-                    
-
-                    <h3> Digite seu email </h3>
-                    <ul>
-                        <li>
-                            <div class="input-append newsletter-box text-center">
-                                <input type="text" class="full text-center" placeholder="Email ">
-                                <button class="btn  bg-gray" type="button"> Enviar<i class="fa fa-long-arrow-right"> </i> </button>
-                            </div>
-                        </li>
-                    </ul>
-                    <ul class="social">
-                        <li> <a href="https://www.facebook.com"> <i class=" fa fa-facebook"> <img href="#!" src="img/face.PNG">   </i> </a> </li>
-                        <li> <a href="https://twitter.com"> <i class="fa fa-twitter">  <img href="#!" src="img/twitter.png">   </i> </a> </li>
-                        
-                        
-                        <li> <a href="https://www.youtube.com"> <i class="fa fa-youtube"> <img href="#!" src="img/youtube.png">   </i> </a> </li>
-                    </ul>
-                </div>
-            </div>
-            <!--/.row--> 
-        </div>
-        <!--/.container--> 
-    </div>
-    <!--/.footer-->
     
-    <div class="footer-bottom">
-        <div class="container">
-            <p class="pull-left"> Copyright © - Equipe Foca 2018. All right reserved. </p>
-            <div class="pull-right">
-                <ul class="nav nav-pills payments">
-                  <li><i class="fa fa-cc-visa"></i></li>
-                    <li><i class="fa fa-cc-mastercard"></i></li>
-                    <li><i class="fa fa-cc-amex"></i></li>
-                    <li><i class="fa fa-cc-paypal"></i></li>
-                </ul> 
+    /* Remove the jumbotron's default bottom margin */ 
+     .jumbotron {
+      margin-bottom: 0;
+    }
+   
+    /*inicio do css do footer*/
+   
+   
+    .footer-bs {
+    background-color: #3c3d41;
+	padding: 60px 40px;
+	color: rgba(255,255,255,1.00);
+	margin-bottom: 20px;
+	border-bottom-right-radius: 6px;
+	border-top-left-radius: 0px;
+	border-bottom-left-radius: 6px;
+}
+.footer-bs .footer-brand, .footer-bs .footer-nav, .footer-bs .footer-social, .footer-bs .footer-ns { padding:10px 25px; }
+.footer-bs .footer-nav, .footer-bs .footer-social, .footer-bs .footer-ns { border-color: transparent; }
+.footer-bs .footer-brand h2 { margin:0px 0px 10px; }
+.footer-bs .footer-brand p { font-size:12px; color:rgba(255,255,255,0.70); }
+
+.footer-bs .footer-nav ul.pages { list-style:none; padding:0px; }
+.footer-bs .footer-nav ul.pages li { padding:5px 0px;}
+.footer-bs .footer-nav ul.pages a { color:rgba(255,255,255,1.00); font-weight:bold; text-transform:uppercase; }
+.footer-bs .footer-nav ul.pages a:hover { color:rgba(255,255,255,0.80); text-decoration:none; }
+.footer-bs .footer-nav h4 {
+	font-size: 11px;
+	text-transform: uppercase;
+	letter-spacing: 3px;
+	margin-bottom:10px;
+}
+
+.footer-bs .footer-nav ul.list { list-style:none; padding:0px; }
+.footer-bs .footer-nav ul.list li { padding:5px 0px;}
+.footer-bs .footer-nav ul.list a { color:rgba(255,255,255,0.80); }
+.footer-bs .footer-nav ul.list a:hover { color:rgba(255,255,255,0.60); text-decoration:none; }
+
+.footer-bs .footer-social ul { list-style:none; padding:0px; }
+.footer-bs .footer-social h4 {
+	font-size: 11px;
+	text-transform: uppercase;
+	letter-spacing: 3px;
+}
+.footer-bs .footer-social li { padding:5px 4px;}
+.footer-bs .footer-social a { color:rgba(255,255,255,1.00);}
+.footer-bs .footer-social a:hover { color:rgba(255,255,255,0.80); text-decoration:none; }
+
+.footer-bs .footer-ns h4 {
+	font-size: 11px;
+	text-transform: uppercase;
+	letter-spacing: 3px;
+	margin-bottom:10px;
+}
+.footer-bs .footer-ns p { font-size:12px; color:rgba(255,255,255,0.70); }
+
+@media (min-width: 768px) {
+	.footer-bs .footer-nav, .footer-bs .footer-social, .footer-bs .footer-ns { border-left:solid 1px rgba(255,255,255,0.10); }
+}
+/*fim do css do footer */
+    
+  </style>
+</head>
+<body>
+
+    <div class="jumbotron" style="background-color: #F4771D">
+        <div class="container text-center">
+            
+               <h1> <img src="seal1.png"> Seal Search </h1>      
+          <p> Pesquisa rápida & Inequívoca</p>
+        </div>
+      </div>
+      
+      <nav class="navbar navbar-inverse" style="background-color:#191814">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>                        
+            </button>
+          <!-- <a class="navbar-brand" href="#">Logo</a> --> 
+       
+      
+          <!-- inico do nav-->
+          </div>
+          <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="Home.php">Home</a></li>
+              <li><a href="Produto.php">Produtos</a></li>
+              <li><a href="Perfil.php">Perfil</a></li>
+              <li><a href="Cadasto.php">Cadastro</a></li>
+              
+              
+              <div class="input-group" style="width:200px;font-size: 13px">
+                  <input type="text" class="form-control" >
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                  </span>
+                </div>
+             
+            
+            
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                
+                 <li><button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenter"> Login  </button></li> 
+                          
+                     
+              <li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> Carrinho</a></li>
+            </ul>
+      
+          </div>
+        </div>
+      
+     
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h3 class="modal-title" id="exampleModalLongTitle">Entre</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+      
+                      <!-- formulario de login-->
+                   
+        <form class="text-center border border-light p-5">
+        
+              <h3 class="h4 mb-4">Registre-se</h3>
+          
+              <!-- Email -->
+              <label>  
+              <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="E-mail" style="width:450px;font-size: 13px">
+            </label> <br>
+          
+              <!-- Password -->
+              <label>  
+              <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password" style="width:450px;font-size: 13px">
+            </label> <br>
+              <div class="d-flex justify-content-around">
+                  <div>
+                      <!-- Remember me -->
+                      <div class="custom-control custom-checkbox">
+                          <input type="checkbox" class="custom-control-input" id="defaultLoginFormRemember">
+                          <label class="custom-control-label" for="defaultLoginFormRemember">Lembrar-me</label> <br>
+                      </div>
+                  </div>
+                  <div>
+                      <!-- Forgot password -->
+                      <a href="">Esqueceu a sua senha?</a><br>
+                  </div>
+              </div>
+          
+              <!-- Sign in button -->
+              <button class="btn btn-warning" type="submit" >Login</button><br>
+          
+              <!-- Register -->
+              <p>Ainda não se cadastrou?
+              <a href = "cadastro.php">Cadastre-se</a>
+              </p><br>
+          
+              
+              
+          
+          </form>
+          <!-- Fim do formulario de login -->
+          </div>
+          </div>
+          </div>
+          </nav>
+      
+          <!-- fim do nav-->
+          
+
+
+<div class="container">
+   
+  <div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner">
+      <div class="item active">
+        <img src="kabum.png" alt="Los Angeles" style="width:100%;">
+      </div>
+
+      <div class="item">
+        <img src="pichau.jpg" alt="Chicago" style="width:100%;">
+      </div>
+    
+      <div class="item">
+        <img src="fantoy.jpg" alt="New york" style="width:100%;">
+      </div>
+    </div>
+
+    <!-- Left and right controls -->
+    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</div>
+
+
+
+
+
+<!-- inicio do footer-->
+<footer class="footer-bs" style="background-color:#191814">
+    <div class="row">
+        <div class="col-md-3 footer-brand animated fadeInLeft">
+            <img src="seal.png" width="250" class="img-circle" height="250">
+            <p style="color: #E0851D">Seal search é um site de busca rápida e com a melhor precisão em preço para o seu bolso.</p>
+            <p style="color: #E0851D">© 2019 Equipe foca, All rights reserved</p>
+        </div>
+        <div class="col-md-4 footer-nav animated fadeInUp">
+          
+            <div class="col-md-6">
+                <ul class="list">
+                    <li><a href="#" style="color: #E0851D">Sobre nós</a></li>
+                    <li><a href="#" style="color: #E0851D">Contatos</a></li>
+                    <li><a href="#" style="color: #E0851D">Termos & condições</a></li>
+                    <li><a href="#" style="color: #E0851D">Politica de privacidade</a></li>
+                </ul>
             </div>
         </div>
+        <div class="col-md-2 footer-social animated fadeInDown">
+            <h4 style="color: #E0851D">Siga-nos</h4>
+            <ul>
+                <li><a href="#" style="color: #E0851D">Facebook</a></li>
+                <li><a href="#" style="color: #E0851D">Twitter</a></li>
+                <li><a href="#" style="color: #E0851D">Instagram</a></li>
+              
+            </ul>
+        </div>
+        <div class="col-md-3 footer-ns animated fadeInRight">
+            <h4 style="color: #E0851D">Newsletter</h4>
+            <p style="color: #E0851D">Dê o seu feedback</p>
+            <p>
+                <div class="input-group">
+                  <input type="text" class="form-control" >
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-envelope"></span></button>
+                  </span>
+                </div><!-- /input-group -->
+             </p>
+        </div>
     </div>
-    <!--/.footer-bottom--> 
 </footer>
-<!-- final do footer-->
+<!-- fim do footer-->
 
 </body>
-
 </html>
+
+
+
