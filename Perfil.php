@@ -1,7 +1,7 @@
 <?php
 require_once '../login_cadastro_usuario/seguranca_usuario.php';
 
-if(! isset($_SESSION['email'],$_SESSION['senha']) | !hash_equals($tokenSessao, $_SESSION['tokenUsuarioLogado'])) {
+if(empty($_SESSION['email']) || !hash_equals($tokenSessao, $_SESSION['tokenUsuarioLogado'])) {
     header('Location: ../login_cadastro_usuario/logout_usuario.php');
 }
 ?>
@@ -104,7 +104,7 @@ if(! isset($_SESSION['email'],$_SESSION['senha']) | !hash_equals($tokenSessao, $
       <ul class="nav navbar-nav">
             <li class="active"><a href="Home.php">Home</a></li>
             <li><a href="Produtos.php">Produtos</a></li>
-            <?php if(isset($_SESSION['email'], $_SESSION['senha'])) : ?>
+            <?php if(isset($_SESSION['tokenUsuarioLogado'])) : ?>
                 <li><a href="Perfil.php">Perfil</a></li>
             <?php else : ?>
                 <li><a href="Cadastro.php">Cadastro</a></li>
@@ -117,7 +117,7 @@ if(! isset($_SESSION['email'],$_SESSION['senha']) | !hash_equals($tokenSessao, $
                   </div>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-            <?php if(empty($_SESSION['email']) && empty($_SESSION['senha'])) : ?>
+            <?php if(empty($_SESSION['tokenUsuarioLogado'])) : ?>
                 <li><button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenter">Login</button></li> 
             <?php else : ?>
                 <li><a href="<?php echo '../login_cadastro_usuario/logout_usuario.php'; ?>"><button type="button" class="btn btn-warning" data-target="#exampleModalCenter">Logout</button></a></li>
@@ -182,7 +182,7 @@ if(! isset($_SESSION['email'],$_SESSION['senha']) | !hash_equals($tokenSessao, $
 			<div class="row">
 			   <div class="col-md-7 ">
 		<div class="panel panel-default">
-		  <div class="panel-heading">  <h4 >Perfil do usuÃ¡rio</h4></div>
+		  <div class="panel-heading">  <h4 >Perfil do usuário</h4></div>
 		   <div class="panel-body">
 			<div class="box box-info">
 					<div class="box-body">
@@ -203,19 +203,19 @@ if(! isset($_SESSION['email'],$_SESSION['senha']) | !hash_equals($tokenSessao, $
 					</div>
 					<div class="clearfix"></div>
 					<hr style="margin:5px 0 5px 0;">
-		<div class="col-sm-5 col-xs-6 tital " >Primeiro nome:</div><div class="col-sm-7 col-xs-6 ">Jeniffer</div>
+		<div class="col-sm-5 col-xs-6 tital " >Primeiro nome:</div><div class="col-sm-7 col-xs-6 "><?php echo $_SESSION['nome']; ?></div>
 			 <div class="clearfix"></div>
 		<div class="bot-border"></div>
-		<div class="col-sm-5 col-xs-6 tital " >Nome do meio:</div><div class="col-sm-7"> Shankar</div>
+		<div class="col-sm-5 col-xs-6 tital " >Email:</div><div class="col-sm-7"><?php echo $_SESSION['email']; ?></div>
 		  <div class="clearfix"></div>
 		<div class="bot-border"></div>
-		<div class="col-sm-5 col-xs-6 tital " >Ãšltimo nome:</div><div class="col-sm-7"> GD</div>
+		<div class="col-sm-5 col-xs-6 tital " >CPF:</div><div class="col-sm-7"><?php echo $_SESSION['cpf']; ?></div>
 		  <div class="clearfix"></div>
 		<div class="bot-border"></div>
-		<div class="col-sm-5 col-xs-6 tital " >Data de inscriÃ§Ã£o:</div><div class="col-sm-7">15 Jun 2016</div>
+                <div class="col-sm-5 col-xs-6 tital " >Data de inscrição:</div><div class="col-sm-7"><?php echo date("Y/m/d"); ?></div>
 		  <div class="clearfix"></div>
 		<div class="bot-border"></div>
-		<div class="col-sm-5 col-xs-6 tital " >Data de nascimento:</div><div class="col-sm-7">11 Jun 1998</div>
+		<div class="col-sm-5 col-xs-6 tital " >Data de nascimento:</div><div class="col-sm-7"><?php echo $_SESSION['dataNasc']; ?></div>
 		  <div class="clearfix"></div>
 		<div class="bot-border"></div>
 		<div class="col-sm-5 col-xs-6 tital " >Lugar de nascimento:</div><div class="col-sm-7">Pernambuco</div>
