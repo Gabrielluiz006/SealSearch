@@ -3,18 +3,8 @@ require_once '../login_cadastro_usuario/seguranca_usuario.php';
 
 if(isset($_SESSION['tokenUsuarioLogado'])) {
     if(!hash_equals($tokenSessao, $_SESSION['tokenUsuarioLogado'])) {
-        if(isset($_SESSION['email'])) {
-        $email_login = $_SESSION['email'];
-        }
-        $_SESSION = array();
-        session_destroy();
+        header('Location: ../login_cadastro_usuario/logout_usuario.php');
     }
-}
-// preenche o form de login com o email setando um cookie
-if(isset($_SESSION['email'])) {
-    setcookie('email-login', $_SESSION['email']);
-}else if(isset ($email_login)) {
-    setcookie('email-login', $email_login);
 }
 ?>
 <!DOCTYPE html>
