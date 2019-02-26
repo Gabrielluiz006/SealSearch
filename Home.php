@@ -6,20 +6,8 @@ require_once '../login_cadastro_usuario/seguranca_usuario.php';
  */
 if(isset($_SESSION['tokenUsuarioLogado'])) {
     if(!hash_equals($tokenSessao, $_SESSION['tokenUsuarioLogado'])) {
-        if(isset($_SESSION['email'])) {
-        $email_login = $_SESSION['email'];
-        }
-        $_SESSION = array();
-        session_destroy();
+        header('Location: ../login_cadastro_usuario/logout_usuario.php');
     }
-}
-/* preenche o form de login com o email setando um cookie
- * que pode vim de uma sessao ou variavel local
- */
-if(isset($_SESSION['email'])) {
-    setcookie('email-login', $_SESSION['email']);
-}else if(isset ($email_login)) {
-    setcookie('email-login', $email_login);
 }
 ?>
 <!DOCTYPE html>
@@ -123,7 +111,7 @@ if(isset($_SESSION['email'])) {
             <ul class="nav navbar-nav">
                 <li class="active"><a href="Home.php">Home</a></li>
                 <li><a href="Produtos.php">Produtos</a></li>
-                <?php if(isset($_SESSION['email'], $_SESSION['senha'])) : ?>
+                <?php if(isset($_SESSION['tokenUsuarioLogado'])) : ?>
                     <li><a href="Perfil.php">Perfil</a></li>
                 <?php else : ?>
                     <li><a href="Cadastro.php">Cadastro</a></li>
@@ -136,7 +124,7 @@ if(isset($_SESSION['email'])) {
                 </div>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <?php if(empty($_SESSION['email']) && empty($_SESSION['senha'])) : ?>
+                <?php if(empty($_SESSION['tokenUsuarioLogado'])) : ?>
                     <li><button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenter">Login</button></li> 
                 <?php else : ?>
                     <li><a href="<?php echo '../login_cadastro_usuario/logout_usuario.php'; ?>"><button type="button" class="btn btn-warning" data-target="#exampleModalCenter">Logout</button></a></li>
